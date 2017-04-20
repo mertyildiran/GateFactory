@@ -1,0 +1,9 @@
+# Ignore Python compiled code (byte code) #
+###################
+*.pyc
+
+# Ignore directories related with packaging #
+###################
+gate.egg-info/
+dist/
+build/
