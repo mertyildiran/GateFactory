@@ -6,9 +6,9 @@ import random
 INPUT_SIZE = 16
 OUTPUT_SIZE = 1
 
-TRAINING_DURATION = 1
+TRAINING_DURATION = 3
 
-TRAINING_SAMPLE_SIZE = 20
+TRAINING_SAMPLE_SIZE = 8
 TESTING_SAMPLE_SIZE = 20
 
 def generate_list_class1():
@@ -70,7 +70,7 @@ for i in repeat(None, TESTING_SAMPLE_SIZE):
         expected = [0]
 
     factory.load(generated_list)
-    time.sleep(TRAINING_DURATION)
+    time.sleep(TRAINING_DURATION/2)
 
     output = factory.output
     #error += abs(expected[0] - output)
@@ -84,7 +84,11 @@ for i in repeat(None, TESTING_SAMPLE_SIZE):
 print "\n"
 factory.stop()
 
+print "\nGateFactory searched the solution over " + str(factory.combination_counter) + " different boolean combinations by going " + str(factory.level_counter) + " levels of deepness\n"
+
 error = float(error) / error_divisor
 print "\nOverall error: " + str(error) + "\n"
+
+print "\nThe best boolean expression has been found your problem is:\n\t" + str(factory.best) + "\n"
 
 print "Exit the program"

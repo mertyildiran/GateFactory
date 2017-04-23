@@ -18,7 +18,8 @@ class Factory():
 
 		self.mini_batch = []
 		self.mini_batch_limit = int(math.sqrt(input_dim))
-		self.counter = 0
+		self.level_counter = 0
+		self.combination_counter = 0
 		self.lock = False
 
 		self.stopper = False
@@ -45,8 +46,11 @@ class Factory():
 						if float(error) / divisor <= float(error_old) / divisor:
 							self.best = combination
 							self.error = float(error) / divisor
+							print ""
 							print self.best
+					self.combination_counter += 1
 				self.pool.extend(random.sample(combinations,len(self.input)))
+				self.level_counter += 1
 				#print self.pool
 				#print "\n"
 
