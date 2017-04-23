@@ -13,6 +13,7 @@ class Factory():
 
 		self.best = (0,1)
 		self.error = 1.0
+		self.pool = range(input_dim)
 
 		self.mini_batch = []
 		self.mini_batch_limit = int(math.sqrt(input_dim))
@@ -28,20 +29,26 @@ class Factory():
 			self.output = self.NAND(self.best)
 			# level1
 			if self.mini_batch:
-				for duo in list(itertools.combinations_with_replacement(range(len(self.input)),2)):
+				combinations = list(itertools.combinations_with_replacement(self.pool,2))
+				for combination in combinations:
 					error = 0
+					error_old = 0
 					divisor = 0
 					for data in self.mini_batch:
 						self.input = data[0]
 						self.target = data[1]
-						error += abs(self.NAND(duo) - self.target[0])
+						error_old += abs(self.NAND(self.best) - self.target[0])
+						error += abs(self.NAND(combination) - self.target[0])
 						divisor += 1
 					if divisor != 0:
-						if error / divisor < self.error:
-							self.best = duo
+						if error / divisor < error_old / divisor:
+							self.best = combination
 							self.error = error / divisor
 							print self.best
 							print self.error
+				self.pool.extend(random.sample(combinations,len(self.input)))
+				#print self.pool
+				#print "\n"
 
 	def start(self):
 		self.stopper = False
@@ -77,7 +84,15 @@ class Factory():
 					self.mini_batch.pop(0)
 
 	def NAND(self,duo):
-		if not (self.input[duo[0]] and self.input[duo[1]]):
+		if isinstance(duo[0], tuple):
+			left = self.NAND(duo[0])
+		else:
+			left = self.input[duo[0]]
+		if isinstance(duo[1], tuple):
+			right = self.NAND(duo[1])
+		else:
+			right = self.input[duo[1]]
+		if not (left and right):
 			return 1
 		else:
 			return 0

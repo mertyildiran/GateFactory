@@ -3,29 +3,35 @@ import time
 from itertools import repeat
 import random
 
-INPUT_SIZE = 4
+INPUT_SIZE = 16
 OUTPUT_SIZE = 1
 
 TRAINING_DURATION = 1
 
-TRAINING_SAMPLE_SIZE = 4
+TRAINING_SAMPLE_SIZE = 20
 TESTING_SAMPLE_SIZE = 20
 
 def generate_list_class1():
     generated_list = []
-    for i in repeat(None, int(INPUT_SIZE/4)):
-        generated_list.append(1)
-    for i in repeat(None, int(3*INPUT_SIZE/4)):
-        generated_list.append(0)
+    for i in range(1,INPUT_SIZE+1):
+        mod = random.randint(2,4)
+        if i%mod == 0:
+            generated_list.append(1)
+        else:
+            generated_list.append(0)
     return generated_list
+    #return [random.randint(0,1) for b in range(1,INPUT_SIZE+1)]
 
 def generate_list_class2():
     generated_list = []
-    for i in repeat(None, int(INPUT_SIZE/4)):
-        generated_list.append(0)
-    for i in repeat(None, int(3*INPUT_SIZE/4)):
-        generated_list.append(1)
+    for i in range(1,INPUT_SIZE+1):
+        mod = random.randint(5,7)
+        if i%mod == 0:
+            generated_list.append(1)
+        else:
+            generated_list.append(0)
     return generated_list
+    #return [random.randint(0,1) for b in range(1,INPUT_SIZE+1)]
 
 
 print "\n___ GATEFACTORY EASY CLASSIFICATION EXAMPLE ___\n"
@@ -67,7 +73,9 @@ for i in repeat(None, TESTING_SAMPLE_SIZE):
     time.sleep(TRAINING_DURATION)
 
     output = factory.output
-    error += abs(expected[0] - output)
+    #error += abs(expected[0] - output)
+    if expected[0] != output:
+        error += 1
     error_divisor += 1
     print "Load Input: " + str(generated_list) + "\tRESULT: " + str(output) + "\tExpected: " + str(expected)
 
@@ -76,7 +84,7 @@ for i in repeat(None, TESTING_SAMPLE_SIZE):
 print "\n"
 factory.stop()
 
-error = error / error_divisor
+error = float(error) / float(error_divisor)
 print "\nOverall error: " + str(error) + "\n"
 
 print "Exit the program"
