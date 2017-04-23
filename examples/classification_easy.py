@@ -84,7 +84,7 @@ for i in repeat(None, TESTING_SAMPLE_SIZE):
 print "\n"
 factory.stop()
 
-error = float(error) / float(error_divisor)
+error = float(error) / error_divisor
 print "\nOverall error: " + str(error) + "\n"
 
 print "Exit the program"

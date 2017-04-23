@@ -2,6 +2,7 @@ import math
 import threading
 import random
 import itertools
+import sys
 
 
 class Factory():
@@ -41,11 +42,10 @@ class Factory():
 						error += abs(self.NAND(combination) - self.target[0])
 						divisor += 1
 					if divisor != 0:
-						if error / divisor < error_old / divisor:
+						if float(error) / divisor <= float(error_old) / divisor:
 							self.best = combination
-							self.error = error / divisor
+							self.error = float(error) / divisor
 							print self.best
-							print self.error
 				self.pool.extend(random.sample(combinations,len(self.input)))
 				#print self.pool
 				#print "\n"
