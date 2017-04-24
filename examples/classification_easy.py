@@ -89,6 +89,6 @@ print "\nGateFactory searched the solution over " + str(factory.combination_coun
 error = float(error) / error_divisor
 print "\nOverall error: " + str(error) + "\n"
 
-print "\nThe best boolean expression has been found your problem is:\n\t" + str(factory.best) + "\n"
+print "\nThe best boolean expression has been found for your problem is:\n\t" + str(factory.best) + "\n"
 
 print "Exit the program"

@@ -14,7 +14,8 @@ class Factory():
 
 		self.best = (0,1)
 		self.error = 1.0
-		self.pool = range(input_dim)
+		self.pool_length = int(math.sqrt(input_dim))
+		self.pool = random.sample(range(input_dim),self.pool_length)
 
 		self.mini_batch = []
 		self.mini_batch_limit = int(math.sqrt(input_dim))
@@ -49,7 +50,9 @@ class Factory():
 							print ""
 							print self.best
 					self.combination_counter += 1
-				self.pool.extend(random.sample(combinations,len(self.input)))
+				self.pool.extend(random.sample(combinations,self.pool_length))
+				for i in range(self.pool_length):
+					self.pool[i] = random.sample(range(len(self.input)),1)[0]
 				self.level_counter += 1
 				#print self.pool
 				#print "\n"

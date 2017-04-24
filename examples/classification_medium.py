@@ -9,11 +9,11 @@ import sys
 import time
 
 INPUT_SIZE = 32 * 32 * 3
-OUTPUT_SIZE = 3
+OUTPUT_SIZE = 1
 
 TRAINING_DURATION = 3
 
-TRAINING_SAMPLE_SIZE = 20
+TRAINING_SAMPLE_SIZE = 120
 TESTING_SAMPLE_SIZE = 20
 
 def load_batch(fpath, label_key='labels'):
@@ -32,27 +32,16 @@ def show_output(factory,testing=False):
     global error_divisor
 
     if testing:
-        output = factory.get_output()
-        output_init = output # Only different line
-        output = [round(x*255) for x in output]
-        print "Red: " + str(output[2]) + "\t" + "Green: " + str(output[1]) + "\t" + "Blue: " + str(output[0]) + "\r",
-        sys.stdout.flush()
-        output = np.full((32, 32, 3), output, dtype='uint8')
-        cv2.imshow("Output", output)
-        cv2.waitKey(100)
-
-        error += abs(testing[2] - output_init[2])
-        error += abs(testing[0] - output_init[0])
-        error_divisor += 2
-    else:
         time.sleep(TRAINING_DURATION/2)
-        output = factory.get_output()
-        output = [round(x*255) for x in output]
-        print "Red: " + str(output[2]) + "\t" + "Green: " + str(output[1]) + "\t" + "Blue: " + str(output[0]) + "\r",
-        sys.stdout.flush()
-        output = np.full((32, 32, 3), output, dtype='uint8')
-        cv2.imshow("Output", output)
-        cv2.waitKey(int(1000 * TRAINING_DURATION / 2))
+        output = factory.output
+
+        error += abs(testing[0] - output)
+        error_divisor += 1
+        print "RESULT: " + str(output) + "\tExpected: " + str(testing)
+    else:
+        time.sleep(TRAINING_DURATION)
+        output = factory.output
+        print "Output: " + str(output)
 
 
 print "\n___ GATEFACTORY MEDIUM CLASSIFICATION (CATDOG) EXAMPLE ___\n"
@@ -108,11 +97,6 @@ for i in range(0, num_train_samples/5 - 1):
         test_dogs.append(x_test[i])
 
 
-blue = np.array([255, 0, 0])
-red = np.array([0, 0, 255])
-blue_normalized = np.true_divide(blue, 255)
-red_normalized = np.true_divide(red, 255)
-
 print "Create a new GateFactory with input size of " + str(INPUT_SIZE) + " and output size of " + str(OUTPUT_SIZE)
 factory = gate.Factory(INPUT_SIZE,OUTPUT_SIZE)
 
@@ -126,15 +110,13 @@ for i in range(1,TRAINING_SAMPLE_SIZE):
     if (i % 2) == 0:
         cat = random.sample(cats, 1)[0]
         cat_normalized = np.true_divide(cat, 255).flatten()
-        blue_normalized = np.true_divide(blue, 255).flatten()
-        cv2.imshow("Input", cat)
-        factory.load(cat_normalized,blue_normalized)
+        cat_binary = (cat_normalized > 0.5).astype(int)
+        factory.load(cat_binary,[1])
     else:
         dog = random.sample(dogs, 1)[0]
         dog_normalized = np.true_divide(dog, 255).flatten()
-        red_normalized = np.true_divide(red, 255).flatten()
-        cv2.imshow("Input", dog)
-        factory.load(dog_normalized,red_normalized)
+        dog_binary = (dog_normalized > 0.5).astype(int)
+        factory.load(dog_binary,[0])
     show_output(factory)
 
 
@@ -144,20 +126,24 @@ for i in range(1,TESTING_SAMPLE_SIZE):
     if binary_random == 0:
         cat = random.sample(test_cats, 1)[0]
         cat_normalized = np.true_divide(cat, 255).flatten()
-        cv2.imshow("Input", cat)
-        factory.load(cat_normalized)
-        show_output(factory,[1.0, 0.0, 0.0])
+        cat_binary = (cat_normalized > 0.5).astype(int)
+        factory.load(cat_binary)
+        show_output(factory,[1])
     else:
         dog = random.sample(test_dogs, 1)[0]
         dog_normalized = np.true_divide(dog, 255).flatten()
-        cv2.imshow("Input", dog)
-        factory.load(dog_normalized)
-        show_output(factory,[0.0, 0.0, 1.0])
+        dog_binary = (dog_normalized > 0.5).astype(int)
+        factory.load(dog_binary)
+        show_output(factory,[0])
 
 
 factory.stop()
 cv2.destroyAllWindows()
 
-print "\nOverall error: " + str(error/error_divisor) + "\n"
+print "\nGateFactory searched the solution over " + str(factory.combination_counter) + " different boolean combinations by going " + str(factory.level_counter) + " levels of deepness\n"
+
+print "\nOverall error: " + str(float(error)/error_divisor) + "\n"
+
+print "\nThe best boolean expression has been found for your problem is:\n\t" + str(factory.best) + "\n"
 
 print "Exit the program"
