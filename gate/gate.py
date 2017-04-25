@@ -13,6 +13,7 @@ class Factory():
 		self.output = []
 
 		self.best = (0,1)
+		self.best_depth = 0
 		self.error = 1.0
 		self.pool_length = int(math.sqrt(input_dim))
 		self.pool = random.sample(range(input_dim),self.pool_length)
@@ -34,22 +35,24 @@ class Factory():
 			if self.mini_batch:
 				combinations = list(itertools.combinations_with_replacement(self.pool,2))
 				for combination in combinations:
-					error = 0
-					error_old = 0
-					divisor = 0
-					for data in self.mini_batch:
-						self.input = data[0]
-						self.target = data[1]
-						error_old += abs(self.NAND(self.best) - self.target[0])
-						error += abs(self.NAND(combination) - self.target[0])
-						divisor += 1
-					if divisor != 0:
-						if float(error) / divisor <= float(error_old) / divisor:
-							self.best = combination
-							self.error = float(error) / divisor
-							print ""
-							print self.best
-					self.combination_counter += 1
+					if self.depth(combination) > self.best_depth:
+						error = 0
+						error_old = 0
+						divisor = 0
+						for data in self.mini_batch:
+							self.input = data[0]
+							self.target = data[1]
+							error_old += abs(self.NAND(self.best) - self.target[0])
+							error += abs(self.NAND(combination) - self.target[0])
+							divisor += 1
+						if divisor != 0:
+							if float(error) / divisor <= float(error_old) / divisor:
+								self.best = combination
+								self.error = float(error) / divisor
+								print ""
+								print self.best
+								self.best_depth = self.depth(self.best)
+						self.combination_counter += 1
 				self.pool.extend(random.sample(combinations,self.pool_length))
 				for i in range(self.pool_length):
 					self.pool[i] = random.sample(range(len(self.input)),1)[0]
@@ -103,6 +106,12 @@ class Factory():
 			return 1
 		else:
 			return 0
+
+	def depth(self,expr):
+	    if not isinstance(expr, tuple):
+	        return 0
+	    # this says: return the maximum depth of any sub-expression + 1
+	    return max(map(self.depth, expr)) + 1
 
 	#random binary list
 	def rbl(self,n):
