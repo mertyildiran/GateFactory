@@ -122,3 +122,20 @@ class Factory():
 	#random binary list
 	def rbl(self,n):
 		return [random.randint(0,1) for b in range(1,n+1)]
+
+	def generate_tex_file(self):
+		text = """\documentclass{article}
+\usepackage{circuitikz}
+\\begin{document}
+
+\\begin{circuitikz}
+
+"""
+
+		text = text + """
+\end{circuitikz}
+
+\end{document}"""
+
+		with open("factory.tex", "w") as text_file:
+			text_file.write(text)

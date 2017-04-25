@@ -93,4 +93,6 @@ print "\nThe best boolean expression has been found for your problem is:\n\t" + 
 
 print "Depth of this boolean expression is: " + str(factory.best_depth) + "\n"
 
+factory.generate_tex_file()
+
 print "Exit the program"
