@@ -3,14 +3,26 @@
 \begin{document}
 
 % https://tex.stackexchange.com/a/32843/132144
-\begin{circuitikz} \draw
+\begin{circuitikz}
 
-(0,0) node[nand port] (nand1) {}
-(-2,1) node[nand port] (nand2) {}
-(-2,-1) node[nand port] (nand3) {}
+\node[nand port] at (0,0) (nand1) {};
+\node[nand port] at (-2,1) (nand2) {};
+\node[nand port] at (-2,-1) (nand3) {};
 
-(nand2.out) -- (nand1.in 1)
-(nand3.out) -- (nand1.in 2);
+\draw (nand2.out) -- (nand1.in 1);
+\draw (nand3.out) -- (nand1.in 2);
+
+\node (i0) at (-4,1.3) {$I_0$};
+\node (i1) at (-4,0.7) {$I_1$};
+\node (i2) at (-4,-0.7) {$I_2$};
+\node (i3) at (-4,-1.3) {$I_3$};
+\node (o0) at (1,0) {$O_0$};
+
+\draw (i0) -- (nand2.in 1);
+\draw (i1) -- (nand2.in 2);
+\draw (i2) -- (nand3.in 1);
+\draw (i3) -- (nand3.in 2);
+\draw (nand1.out) -- (o0);
 
 \end{circuitikz}
 
