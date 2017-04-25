@@ -7,7 +7,7 @@ import sys
 
 class Factory():
 
-	def __init__(self,input_dim=0,output_dim=0):
+	def __init__(self,input_dim,output_dim):
 		self.input = self.rbl(input_dim)
 		self.target = self.rbl(output_dim)
 		self.output = []
@@ -33,9 +33,11 @@ class Factory():
 			self.output = self.NAND(self.best)
 			# level1
 			if self.mini_batch:
+				complex_combinations = []
 				combinations = list(itertools.combinations_with_replacement(self.pool,2))
 				for combination in combinations:
 					if self.depth(combination) >= self.best_depth:
+						complex_combinations.append(combination)
 						error = 0
 						error_old = 0
 						divisor = 0
@@ -51,9 +53,13 @@ class Factory():
 								self.error = float(error) / divisor
 								print ""
 								print self.best
+								#print self.error
 								self.best_depth = self.depth(self.best)
 						self.combination_counter += 1
-				self.pool.extend(random.sample(combinations,self.pool_length))
+				if len(complex_combinations) >= self.pool_length:
+					self.pool.extend(random.sample(complex_combinations,self.pool_length))
+				else:
+					self.pool.extend(random.sample(combinations,self.pool_length))
 				for i in range(self.pool_length):
 					self.pool[i] = random.sample(range(len(self.input)),1)[0]
 				self.level_counter += 1

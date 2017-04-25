@@ -41,7 +41,7 @@ def show_output(factory,testing=False):
     else:
         time.sleep(TRAINING_DURATION)
         output = factory.output
-        print "Output: " + str(output)
+        #print "Output: " + str(output)
 
 
 print "\n___ GATEFACTORY MEDIUM CLASSIFICATION (CATDOG) EXAMPLE ___\n"
