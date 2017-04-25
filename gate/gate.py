@@ -35,7 +35,7 @@ class Factory():
 			if self.mini_batch:
 				combinations = list(itertools.combinations_with_replacement(self.pool,2))
 				for combination in combinations:
-					if self.depth(combination) > self.best_depth:
+					if self.depth(combination) >= self.best_depth:
 						error = 0
 						error_old = 0
 						divisor = 0
