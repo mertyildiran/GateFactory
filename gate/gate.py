@@ -24,6 +24,8 @@ class Factory():
 		self.combination_counter = 0
 		self.lock = False
 
+		self.tex_content = ""
+
 		self.stopper = False
 		self.thread = None
 		self.start()
@@ -124,18 +126,44 @@ class Factory():
 		return [random.randint(0,1) for b in range(1,n+1)]
 
 	def generate_tex_file(self):
-		text = """\documentclass{article}
+		self.tex_content = """\documentclass{article}
 \usepackage{circuitikz}
+\usepackage[width=122mm,left=12mm,paperwidth=1000mm,height=1000mm,top=12mm,paperheight=1000mm]{geometry}
 \\begin{document}
 
 \\begin{circuitikz}
 
+\\node[nand port] at (0,0) (nand1) {};
+\\node (o0) at (1,0) {$O_0$};
+\draw (nand1.out) -- (o0);
 """
+		self.logic_parser(self.best,0,0,1)
 
-		text = text + """
+		self.tex_content += """
 \end{circuitikz}
 
 \end{document}"""
 
-		with open("factory.tex", "w") as text_file:
-			text_file.write(text)
+		with open("factory.tex", "w") as tex_file:
+			tex_file.write(self.tex_content)
+
+	def logic_parser(self,expression,x,y,gate):
+		if isinstance(expression[0], tuple):
+			gate += 1
+			self.tex_content += "\n\\node[nand port] at ("+ str(x-2) +","+ str(y+1) +") (nand"+ str(gate) +") {};"
+			self.tex_content += "\n\draw (nand"+ str(gate) +".out) -- (nand"+ str(gate-1) +".in 1);"
+			self.logic_parser(expression[0],x-2,y+1,gate)
+		else:
+			self.tex_content += "\n\\node (i"+ str(expression[0]) +") at ("+ str(x-2) +","+ str(y+0.3) +") {$I_"+ str(expression[0]) +"$};"
+			self.tex_content += "\n\draw (i"+ str(expression[0]) +") -- (nand"+ str(gate) +".in 1);"
+			return True
+
+		if isinstance(expression[1], tuple):
+			gate += 1
+			self.tex_content += "\n\\node[nand port] at ("+ str(x-2) +","+ str(y-1) +") (nand"+ str(gate) +") {};"
+			self.tex_content += "\n\draw (nand"+ str(gate) +".out) -- (nand"+ str(gate-1) +".in 2);"
+			self.logic_parser(expression[1],x-2,y-1,gate)
+		else:
+			self.tex_content += "\n\\node (i"+ str(expression[1]) +") at ("+ str(x-2) +","+ str(y-0.3) +") {$I_"+ str(expression[1]) +"$};"
+			self.tex_content += "\n\draw (i"+ str(expression[1]) +") -- (nand"+ str(gate) +".in 2);"
+			return True
