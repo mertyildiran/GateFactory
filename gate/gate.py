@@ -25,6 +25,7 @@ class Factory():
 		self.lock = False
 
 		self.tex_content = ""
+		self.gate = 1
 
 		self.stopper = False
 		self.thread = None
@@ -133,11 +134,11 @@ class Factory():
 
 \\begin{circuitikz}
 
-\\node[nand port] at (0,0) (nand1) {};
+\\node[nand port] at (0,0) (nand1) {g1};
 \\node (o0) at (1,0) {$O_0$};
 \draw (nand1.out) -- (o0);
 """
-		self.logic_parser(self.best,0,0,1)
+		self.logic_parser(self.best,0,0,self.gate)
 
 		self.tex_content += """
 \end{circuitikz}
@@ -148,22 +149,21 @@ class Factory():
 			tex_file.write(self.tex_content)
 
 	def logic_parser(self,expression,x,y,gate):
+		print expression
 		if isinstance(expression[0], tuple):
-			gate += 1
-			self.tex_content += "\n\\node[nand port] at ("+ str(x-2) +","+ str(y+1) +") (nand"+ str(gate) +") {};"
-			self.tex_content += "\n\draw (nand"+ str(gate) +".out) -- (nand"+ str(gate-1) +".in 1);"
-			self.logic_parser(expression[0],x-2,y+1,gate)
+			self.gate += 1
+			self.tex_content += "\n\\node[nand port] at ("+ str(x-2) +","+ str(y+1) +") (nand"+ str(self.gate) +") {$g"+ str(self.gate) +"$};"
+			self.tex_content += "\n\draw (nand"+ str(self.gate) +".out) -- (nand"+ str(gate) +".in 1);"
+			self.logic_parser(expression[0],x-2,y+1,self.gate)
 		else:
-			self.tex_content += "\n\\node (i"+ str(expression[0]) +") at ("+ str(x-2) +","+ str(y+0.3) +") {$I_"+ str(expression[0]) +"$};"
+			self.tex_content += "\n\\node (i"+ str(expression[0]) +") at ("+ str(x-2) +","+ str(y+0.3) +") {$I_{"+ str(expression[0]) +"}$};"
 			self.tex_content += "\n\draw (i"+ str(expression[0]) +") -- (nand"+ str(gate) +".in 1);"
-			return True
 
 		if isinstance(expression[1], tuple):
-			gate += 1
-			self.tex_content += "\n\\node[nand port] at ("+ str(x-2) +","+ str(y-1) +") (nand"+ str(gate) +") {};"
-			self.tex_content += "\n\draw (nand"+ str(gate) +".out) -- (nand"+ str(gate-1) +".in 2);"
-			self.logic_parser(expression[1],x-2,y-1,gate)
+			self.gate += 1
+			self.tex_content += "\n\\node[nand port] at ("+ str(x-2) +","+ str(y-1) +") (nand"+ str(self.gate) +") {$g"+ str(self.gate) +"$};"
+			self.tex_content += "\n\draw (nand"+ str(self.gate) +".out) -- (nand"+ str(gate) +".in 2);"
+			self.logic_parser(expression[1],x-2,y-1,self.gate)
 		else:
-			self.tex_content += "\n\\node (i"+ str(expression[1]) +") at ("+ str(x-2) +","+ str(y-0.3) +") {$I_"+ str(expression[1]) +"$};"
+			self.tex_content += "\n\\node (i"+ str(expression[1]) +") at ("+ str(x-2) +","+ str(y-0.3) +") {$I_{"+ str(expression[1]) +"}$};"
 			self.tex_content += "\n\draw (i"+ str(expression[1]) +") -- (nand"+ str(gate) +".in 2);"
-			return True
