@@ -51,7 +51,7 @@ class Factory():
 							error += abs(self.NAND(combination) - self.target[0])
 							divisor += 1
 						if divisor != 0:
-							if float(error) / divisor <= float(error_old) / divisor:
+							if float(error) / divisor < float(error_old) / divisor:
 								self.best = combination
 								self.error = float(error) / divisor
 								print ""
