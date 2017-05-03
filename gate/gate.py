@@ -3,6 +3,7 @@ import threading
 import random
 import itertools
 import sys
+import os
 
 
 class Factory():
@@ -147,6 +148,8 @@ class Factory():
 
 		with open("factory.tex", "w") as tex_file:
 			tex_file.write(self.tex_content)
+
+		print "TeX dump is generated successfully on " + os.getcwd() + "/factory.tex\n"
 
 	def logic_parser(self,expression,x,y,gate,fix):
 		if isinstance(expression[0], tuple):
