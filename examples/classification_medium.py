@@ -13,8 +13,8 @@ OUTPUT_SIZE = 1
 
 TRAINING_DURATION = 3
 
-TRAINING_SAMPLE_SIZE = 120
-TESTING_SAMPLE_SIZE = 20
+TRAINING_SAMPLE_SIZE = 1000
+TESTING_SAMPLE_SIZE = 100
 
 def load_batch(fpath, label_key='labels'):
     # Internal utility for parsing CIFAR data

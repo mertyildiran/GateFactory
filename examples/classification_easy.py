@@ -8,7 +8,7 @@ OUTPUT_SIZE = 1
 
 TRAINING_DURATION = 3
 
-TRAINING_SAMPLE_SIZE = 8
+TRAINING_SAMPLE_SIZE = 40
 TESTING_SAMPLE_SIZE = 20
 
 def generate_list_class1():
@@ -93,4 +93,4 @@ print "\nThe best boolean expression has been found for your problem is:\n\t" + 
 
 print "Depth of this boolean expression is: " + str(factory.best_depth) + "\n"
 
-#factory.generate_tex_file()
+factory.generate_tex_file()

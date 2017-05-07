@@ -20,7 +20,7 @@ class Factory():
 		self.pool = random.sample(range(input_dim),self.pool_length)
 
 		self.mini_batch = []
-		self.mini_batch_limit = int(math.sqrt(input_dim))
+		self.mini_batch_limit = int(math.sqrt(input_dim*self.pool_length))
 		self.level_counter = 0
 		self.combination_counter = 0
 		self.lock = False
@@ -52,7 +52,7 @@ class Factory():
 							error += abs(self.NAND(combination) - self.target[0])
 							divisor += 1
 						if divisor != 0:
-							if float(error) / divisor < float(error_old) / divisor:
+							if float(error) / divisor <= float(error_old) / divisor:
 								self.best = combination
 								self.error = float(error) / divisor
 								print ""
@@ -130,7 +130,7 @@ class Factory():
 	def generate_tex_file(self):
 		self.tex_content = """\documentclass{article}
 \usepackage{circuitikz}
-\usepackage[width=1000mm,left=12mm,paperwidth=1000mm,height=3000mm,top=12mm,paperheight=3000mm]{geometry}
+\usepackage[width=1000mm,left=12mm,paperwidth=1000mm,height=4000mm,top=12mm,paperheight=4000mm]{geometry}
 \\begin{document}
 
 \\begin{circuitikz}[every node/.style={scale=0.5}]
