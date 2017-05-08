@@ -63,7 +63,9 @@ class Factory():
 				if len(complex_combinations) >= self.pool_length:
 					self.pool.extend(random.sample(complex_combinations,self.pool_length))
 				else:
-					self.pool.extend(random.sample(combinations,self.pool_length))
+					#self.pool.extend(random.sample(combinations,self.pool_length))
+					self.pool.extend(complex_combinations)
+					self.pool.extend(random.sample(combinations,self.pool_length - len(complex_combinations)))
 				for i in range(self.pool_length):
 					self.pool[i] = random.sample(range(len(self.input)),1)[0]
 				self.level_counter += 1

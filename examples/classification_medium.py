@@ -147,3 +147,5 @@ print "\nOverall error: " + str(float(error)/error_divisor) + "\n"
 print "\nThe best boolean expression has been found for your problem is:\n\t" + str(factory.best) + "\n"
 
 print "Depth of this boolean expression is: " + str(factory.best_depth) + "\n"
+
+factory.generate_tex_file()
