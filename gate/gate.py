@@ -40,7 +40,7 @@ class Factory():
 				complex_combinations = []
 				combinations = list(itertools.combinations_with_replacement(self.pool,2))
 				for combination in combinations:
-					if self.depth(combination) >= self.best_depth:
+					if self.depth(combination) > self.best_depth-1:
 						complex_combinations.append(combination)
 						error = 0
 						error_old = 0
@@ -52,11 +52,11 @@ class Factory():
 							error += abs(self.NAND(combination) - self.target[0])
 							divisor += 1
 						if divisor != 0:
-							if float(error) / divisor <= float(error_old) / divisor:
+							if float(error) / divisor < float(error_old) / divisor:
 								self.best = combination
 								self.error = float(error) / divisor
-								print ""
-								print self.best
+								#print ""
+								#print self.best
 								#print self.error
 								self.best_depth = self.depth(self.best)
 						self.combination_counter += 1
@@ -100,7 +100,7 @@ class Factory():
 				print "Number of the output/target of the factory: " + str(len(self.target))
 				print "These values are not matching! Please fix it and try it again."
 			else:
-				self.target = output_arr
+				#self.target = output_arr
 				self.mini_batch.append([input_arr,output_arr])
 				if len(self.mini_batch) > self.mini_batch_limit:
 					self.mini_batch.pop(0)
