@@ -1,5 +1,3 @@
-mertyildiran@Corsair:~$ cd Documents/GateFactory/
-mertyildiran@Corsair:~/Documents/GateFactory$ rm factory.tex
 mertyildiran@Corsair:~/Documents/GateFactory$ python examples/classification_easy.py
 
 ___ GATEFACTORY EASY CLASSIFICATION EXAMPLE ___

@@ -13,7 +13,7 @@ OUTPUT_SIZE = 1
 
 TRAINING_DURATION = 3
 
-TRAINING_SAMPLE_SIZE = 1000
+TRAINING_SAMPLE_SIZE = 200
 TESTING_SAMPLE_SIZE = 100
 
 def load_batch(fpath, label_key='labels'):
@@ -106,7 +106,7 @@ error_divisor = 0
 print "\n*** LEARNING ***"
 
 print "\nMap " + str(TRAINING_SAMPLE_SIZE/2) + " Different Cat Images to Color Blue & " + str(TRAINING_SAMPLE_SIZE/2) + " Different Dog Images to Color Red - Training Duration: " + str(TRAINING_DURATION * TRAINING_SAMPLE_SIZE) + " seconds (OpenCV latency not included)"
-for i in range(1,TRAINING_SAMPLE_SIZE):
+for i in range(0,TRAINING_SAMPLE_SIZE):
     if (i % 2) == 0:
         cat = random.sample(cats, 1)[0]
         cat_normalized = np.true_divide(cat, 255).flatten()
@@ -121,7 +121,7 @@ for i in range(1,TRAINING_SAMPLE_SIZE):
 
 
 print "\nTest " + str(TESTING_SAMPLE_SIZE/2) + " Different Cat Images & " + str(TESTING_SAMPLE_SIZE/2) + " Different Dog Images - Testing Duration: " + str(TRAINING_DURATION * TESTING_SAMPLE_SIZE) + " seconds (OpenCV latency not included)"
-for i in range(1,TESTING_SAMPLE_SIZE):
+for i in range(0,TESTING_SAMPLE_SIZE):
     binary_random = random.randint(0,1)
     if binary_random == 0:
         cat = random.sample(test_cats, 1)[0]
@@ -136,6 +136,8 @@ for i in range(1,TESTING_SAMPLE_SIZE):
         factory.load(dog_binary)
         show_output(factory,[0])
 
+
+print ""
 
 factory.stop()
 cv2.destroyAllWindows()

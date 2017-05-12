@@ -1,0 +1,130 @@
+mertyildiran@Corsair:~/Documents/GateFactory$ python examples/classification_medium.py
+
+___ GATEFACTORY MEDIUM CLASSIFICATION (CATDOG) EXAMPLE ___
+
+Load CIFAR-10 dataset
+Pick random 200 cat and 200 dog images from the CIFAR-10 data batch to TRAIN the factory
+Pick random 100 cat and 100 dog images from the CIFAR-10 test batch to TEST the factory
+Create a new GateFactory with input size of 3072 and output size of 1
+Factory has been started
+
+*** LEARNING ***
+
+Map 100 Different Cat Images to Color Blue & 100 Different Dog Images to Color Red - Training Duration: 600 seconds (OpenCV latency not included)
+
+Test 50 Different Cat Images & 50 Different Dog Images - Testing Duration: 300 seconds (OpenCV latency not included)
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [0]
+RESULT: 1	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [1]
+RESULT: 0	Expected: [0]
+RESULT: 1	Expected: [1]
+
+Factory is now stopped
+
+GateFactory searched the solution over 360639 different boolean combinations by going 13 levels of deepness
+
+
+Overall error: 0.39
+
+
+The best boolean expression has been found for your problem is:
+	((582, (2666, 2735)), ((1288, (((2069, 1660), (2674, (613, 421))), (((1374, 91), (1636, (1223, 7))), (2170, (19, ((2237, 1836), (2237, 2296))))))), (((2329, ((1012, (217, 836)), (1977, 1690))), ((569, 2690), (((1722, 1154), ((236, 1705), (2674, (2690, 2044)))), ((1377, (613, 421)), ((91, (2690, 2044)), ((620, (2296, 22)), ((7, 1451), (1821, 2666)))))))), (((461, 1451), (1895, 1449)), (2633, (1517, ((2922, (7, 1451)), ((((1223, 2908), (1223, 2908)), (1895, 1449)), ((620, (2296, 22)), ((1374, 91), (1636, (1223, 7))))))))))))
+
+Depth of this boolean expression is: 12
+
+TeX dump is generated successfully on /home/mertyildiran/Documents/GateFactory/factory.tex
