@@ -5,6 +5,7 @@ import random
 
 INPUT_SIZE = 16
 OUTPUT_SIZE = 1
+HEAD_START = 20
 
 TRAINING_DURATION = 3
 
@@ -37,7 +38,7 @@ def generate_list_class2():
 print "\n___ GATEFACTORY EASY CLASSIFICATION EXAMPLE ___\n"
 
 print "Create a new GateFactory with input size of " + str(INPUT_SIZE) + " and output size of " + str(OUTPUT_SIZE)
-factory = gate.Factory(INPUT_SIZE,OUTPUT_SIZE)
+factory = gate.Factory(INPUT_SIZE,OUTPUT_SIZE,HEAD_START)
 
 print "\n*** LEARNING ***"
 

@@ -8,10 +8,11 @@ import os
 
 class Factory():
 
-	def __init__(self,input_dim,output_dim):
+	def __init__(self,input_dim,output_dim,head_start):
 		self.input = self.rbl(input_dim)
 		self.target = self.rbl(output_dim)
 		self.output = []
+		self.head_start = head_start
 
 		self.best = (0,1)
 		self.best_depth = 0
@@ -40,26 +41,27 @@ class Factory():
 				complex_combinations = []
 				combinations = list(itertools.combinations_with_replacement(self.pool,2))
 				for combination in combinations:
-					if self.depth(combination) > self.best_depth-1:
+					if self.depth(combination) >= self.best_depth:
 						complex_combinations.append(combination)
-						error = 0
-						error_old = 0
-						divisor = 0
-						for data in self.mini_batch:
-							self.input = data[0]
-							self.target = data[1]
-							error_old += abs(self.NAND(self.best) - self.target[0])
-							error += abs(self.NAND(combination) - self.target[0])
-							divisor += 1
-						if divisor != 0:
-							if float(error) / divisor < float(error_old) / divisor:
-								self.best = combination
-								self.error = float(error) / divisor
-								#print ""
-								#print self.best
-								#print self.error
-								self.best_depth = self.depth(self.best)
-						self.combination_counter += 1
+						if self.level_counter >= self.head_start:
+							error = 0
+							error_old = 0
+							divisor = 0
+							for data in self.mini_batch:
+								self.input = data[0]
+								self.target = data[1]
+								error_old += abs(self.NAND(self.best) - self.target[0])
+								error += abs(self.NAND(combination) - self.target[0])
+								divisor += 1
+							if divisor != 0:
+								if float(error) / divisor < float(error_old) / divisor:
+									self.best = combination
+									self.error = float(error) / divisor
+									#print ""
+									#print self.best
+									#print self.error
+									self.best_depth = self.depth(self.best)
+							self.combination_counter += 1
 				if len(complex_combinations) >= self.pool_length:
 					self.pool.extend(random.sample(complex_combinations,self.pool_length))
 				else:

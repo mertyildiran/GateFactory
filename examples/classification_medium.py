@@ -10,6 +10,7 @@ import time
 
 INPUT_SIZE = 32 * 32 * 3
 OUTPUT_SIZE = 1
+HEAD_START = 10
 
 TRAINING_DURATION = 3
 
@@ -98,7 +99,7 @@ for i in range(0, num_train_samples/5 - 1):
 
 
 print "Create a new GateFactory with input size of " + str(INPUT_SIZE) + " and output size of " + str(OUTPUT_SIZE)
-factory = gate.Factory(INPUT_SIZE,OUTPUT_SIZE)
+factory = gate.Factory(INPUT_SIZE,OUTPUT_SIZE,HEAD_START)
 
 error = 0
 error_divisor = 0
