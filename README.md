@@ -30,7 +30,7 @@ python examples/classification_easy.py
 
 #### Medium Classification Example
 
-Download [CIFAR-10 python version](CIFAR-10 python version) and place `CIFAR-10/original/cifar-10-batches-py/` folder inside `GateFactory/examples/` directory like:
+Download [CIFAR-10 python version](https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz) and place `CIFAR-10/original/cifar-10-batches-py/` folder inside `GateFactory/examples/` directory like:
 
 ```
 wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
