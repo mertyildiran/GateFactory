@@ -20,7 +20,7 @@ TESTING_SAMPLE_SIZE = 100
 def load_batch(fpath, label_key='labels'):
     # Internal utility for parsing CIFAR data
     f = open(fpath, 'rb')
-    d = pickle.load(f)
+    d = pickle.load(f, encoding='latin1')
     f.close()
     data = d['data']
     labels = d[label_key]
@@ -38,18 +38,18 @@ def show_output(factory,testing=False):
 
         error += abs(testing[0] - output)
         error_divisor += 1
-        print "RESULT: " + str(output) + "\tExpected: " + str(testing)
+        print("RESULT: " + str(output) + "\tExpected: " + str(testing))
     else:
         time.sleep(TRAINING_DURATION)
         output = factory.output
-        #print "Output: " + str(output)
+        #print("Output: " + str(output))
 
 
-print "\n___ GATEFACTORY MEDIUM CLASSIFICATION (CATDOG) EXAMPLE ___\n"
+print("\n___ GATEFACTORY MEDIUM CLASSIFICATION (CATDOG) EXAMPLE ___\n")
 
-print "Load CIFAR-10 dataset"
-print "Pick random " + str(TRAINING_SAMPLE_SIZE) + " cat and " + str(TRAINING_SAMPLE_SIZE) + " dog images from the CIFAR-10 data batch to TRAIN the factory"
-print "Pick random " + str(TESTING_SAMPLE_SIZE) + " cat and " + str(TESTING_SAMPLE_SIZE) + " dog images from the CIFAR-10 test batch to TEST the factory"
+print("Load CIFAR-10 dataset")
+print("Pick random " + str(TRAINING_SAMPLE_SIZE) + " cat and " + str(TRAINING_SAMPLE_SIZE) + " dog images from the CIFAR-10 data batch to TRAIN the factory")
+print("Pick random " + str(TESTING_SAMPLE_SIZE) + " cat and " + str(TESTING_SAMPLE_SIZE) + " dog images from the CIFAR-10 test batch to TEST the factory")
 
 # Load CIFAR-10 dataset
 path = './examples/cifar-10-batches-py/'
@@ -88,25 +88,25 @@ for i in range(0, num_train_samples - 1):
 
 # Generate the testing data
 test_cats = []
-for i in range(0, num_train_samples/5 - 1):
+for i in range(0, int(num_train_samples/5 - 1)):
     if y_test[i] == 3:
         test_cats.append(x_test[i])
 
 test_dogs = []
-for i in range(0, num_train_samples/5 - 1):
+for i in range(0, int(num_train_samples/5 - 1)):
     if y_test[i] == 5:
         test_dogs.append(x_test[i])
 
 
-print "Create a new GateFactory with input size of " + str(INPUT_SIZE) + " and output size of " + str(OUTPUT_SIZE)
+print("Create a new GateFactory with input size of " + str(INPUT_SIZE) + " and output size of " + str(OUTPUT_SIZE))
 factory = gate.Factory(INPUT_SIZE,OUTPUT_SIZE,HEAD_START)
 
 error = 0
 error_divisor = 0
 
-print "\n*** LEARNING ***"
+print("\n*** LEARNING ***")
 
-print "\nMap " + str(TRAINING_SAMPLE_SIZE/2) + " Different Cat Images to Color Blue & " + str(TRAINING_SAMPLE_SIZE/2) + " Different Dog Images to Color Red - Training Duration: " + str(TRAINING_DURATION * TRAINING_SAMPLE_SIZE) + " seconds (OpenCV latency not included)"
+print("\nMap " + str(TRAINING_SAMPLE_SIZE/2) + " Different Cat Images to Color Blue & " + str(TRAINING_SAMPLE_SIZE/2) + " Different Dog Images to Color Red - Training Duration: " + str(TRAINING_DURATION * TRAINING_SAMPLE_SIZE) + " seconds (OpenCV latency not included)")
 for i in range(0,TRAINING_SAMPLE_SIZE):
     if (i % 2) == 0:
         cat = random.sample(cats, 1)[0]
@@ -121,7 +121,7 @@ for i in range(0,TRAINING_SAMPLE_SIZE):
     show_output(factory)
 
 
-print "\nTest " + str(TESTING_SAMPLE_SIZE/2) + " Different Cat Images & " + str(TESTING_SAMPLE_SIZE/2) + " Different Dog Images - Testing Duration: " + str(TRAINING_DURATION * TESTING_SAMPLE_SIZE) + " seconds (OpenCV latency not included)"
+print("\nTest " + str(TESTING_SAMPLE_SIZE/2) + " Different Cat Images & " + str(TESTING_SAMPLE_SIZE/2) + " Different Dog Images - Testing Duration: " + str(TRAINING_DURATION * TESTING_SAMPLE_SIZE) + " seconds (OpenCV latency not included)")
 for i in range(0,TESTING_SAMPLE_SIZE):
     binary_random = random.randint(0,1)
     if binary_random == 0:
@@ -138,17 +138,17 @@ for i in range(0,TESTING_SAMPLE_SIZE):
         show_output(factory,[0])
 
 
-print ""
+print("")
 
 factory.stop()
 cv2.destroyAllWindows()
 
-print "\nGateFactory searched the solution over " + str(factory.combination_counter) + " different boolean combinations by going " + str(factory.level_counter) + " levels of deepness\n"
+print("\nGateFactory searched the solution over " + str(factory.combination_counter) + " different boolean combinations by going " + str(factory.level_counter) + " levels of deepness\n")
 
-print "\nOverall error: " + str(float(error)/error_divisor) + "\n"
+print("\nOverall error: " + str(float(error)/error_divisor) + "\n")
 
-print "\nThe best boolean expression has been found for your problem is:\n\t" + str(factory.best) + "\n"
+print("\nThe best boolean expression has been found for your problem is:\n\t" + str(factory.best) + "\n")
 
-print "Depth of this boolean expression is: " + str(factory.best_depth) + "\n"
+print("Depth of this boolean expression is: " + str(factory.best_depth) + "\n")
 
 factory.generate_tex_file()

@@ -25,7 +25,7 @@ pip install -e .
 ```
 git clone https://github.com/mertyildiran/GateFactory.git
 cd GateFactory/
-python examples/classification_easy.py
+python3 examples/classification_easy.py
 ```
 
 #### Medium Classification Example
@@ -33,14 +33,23 @@ python examples/classification_easy.py
 Download [CIFAR-10 python version](https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz) and place `CIFAR-10/original/cifar-10-batches-py/` folder inside `GateFactory/examples/` directory like:
 
 ```
+cd ~/Downloads/
 wget https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
 tar -zxvf cifar-10-python.tar.gz
-mv CIFAR-10/original/cifar-10-batches-py/ ../Documents/GateFactory/example/
+mv cifar-10-batches-py/ ~/Documents/GateFactory/examples/
 ```
 
 and then run the example:
 
 ```
-cd ../Documents/GateFactory/
-python examples/classification_medium.py
+cd ~/Documents/GateFactory/
+python3 examples/classification_medium.py
+```
+
+#### Render LaTeX
+
+```
+apt install texlive texlive-pictures
+pdflatex factory.tex
+sensible-browser factory.pdf
 ```

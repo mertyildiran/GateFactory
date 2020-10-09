@@ -57,9 +57,9 @@ class Factory():
 								if float(error) / divisor < float(error_old) / divisor:
 									self.best = combination
 									self.error = float(error) / divisor
-									#print ""
-									#print self.best
-									#print self.error
+									#print("")
+									#print(self.best)
+									#print(self.error)
 									self.best_depth = self.depth(self.best)
 							self.combination_counter += 1
 				if len(complex_combinations) >= self.pool_length:
@@ -71,26 +71,26 @@ class Factory():
 				for i in range(self.pool_length):
 					self.pool[i] = random.sample(range(len(self.input)),1)[0]
 				self.level_counter += 1
-				#print self.pool
-				#print "\n"
+				#print(self.pool)
+				#print("\n")
 
 	def start(self):
 		self.stopper = False
 		if not self.thread:
 			self.thread = threading.Thread(target=self._start)
 			self.thread.start()
-		print "Factory has been started"
+		print("Factory has been started")
 
 	def stop(self):
 		self.stopper = True
 		self.thread = None
-		print "Factory is now stopped"
+		print("Factory is now stopped")
 
 	def load(self,input_arr,output_arr=None):
 		if len(self.input) != len(input_arr):
-			print "Size of the input array: " + str(len(input_arr))
-			print "Size of the input of the factory: " + str(len(self.input))
-			print "These values are not matching! Please fix it and try it again."
+			print("Size of the input array: " + str(len(input_arr)))
+			print("Size of the input of the factory: " + str(len(self.input)))
+			print("These values are not matching! Please fix it and try it again.")
 		else:
 			self.input = input_arr
 		if output_arr is None:
@@ -98,9 +98,9 @@ class Factory():
 			#self.target = []
 		else:
 			if len(self.target) != len(output_arr):
-				print "Size of the output/target array: " + str(len(output_arr))
-				print "Number of the output/target of the factory: " + str(len(self.target))
-				print "These values are not matching! Please fix it and try it again."
+				print("Size of the output/target array: " + str(len(output_arr)))
+				print("Number of the output/target of the factory: " + str(len(self.target)))
+				print("These values are not matching! Please fix it and try it again.")
 			else:
 				#self.target = output_arr
 				self.mini_batch.append([input_arr,output_arr])
@@ -132,28 +132,28 @@ class Factory():
 		return [random.randint(0,1) for b in range(1,n+1)]
 
 	def generate_tex_file(self):
-		self.tex_content = """\documentclass{article}
-\usepackage{circuitikz}
-\usepackage[width=1000mm,left=12mm,paperwidth=1000mm,height=4000mm,top=12mm,paperheight=4000mm]{geometry}
+		self.tex_content = """\\documentclass{article}
+\\usepackage{circuitikz}
+\\usepackage[width=1000mm,left=12mm,paperwidth=1000mm,height=4000mm,top=12mm,paperheight=4000mm]{geometry}
 \\begin{document}
 
 \\begin{circuitikz}[every node/.style={scale=0.5}]
 
 \\node[nand port] at (0,0) (nand1) {g1};
 \\node (o0) at (1,0) {$O_0$};
-\draw (nand1.out) -- (o0);
+\\draw (nand1.out) -- (o0);
 """
 		self.logic_parser(self.best,0,0,self.gate,self.best_depth)
 
 		self.tex_content += """
-\end{circuitikz}
+\\end{circuitikz}
 
-\end{document}"""
+\\end{document}"""
 
 		with open("factory.tex", "w") as tex_file:
 			tex_file.write(self.tex_content)
 
-		print "TeX dump is generated successfully on " + os.getcwd() + "/factory.tex\n"
+		print("TeX dump is generated successfully on " + os.getcwd() + "/factory.tex\n")
 
 	def logic_parser(self,expression,x,y,gate,fix):
 		if isinstance(expression[0], tuple):

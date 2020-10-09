@@ -7,3 +7,9 @@
 gate.egg-info/
 dist/
 build/
+
+examples/cifar-10-batches-py
+factory.aux
+factory.log
+factory.pdf
+factory.tex
